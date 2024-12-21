@@ -99,3 +99,27 @@ function render(){ //A render függvény meghatározása.
     }
 }
 render(); //A render függvényt meghívása.
+
+const form = document.getElementById('form'); //Az űrlapban lévő formnak az id-jének az elkérése.
+form.addEventListener('submit', function(e) { //A függvény meghívódik, a submit használatakor.
+    e.preventDefault(); //A böngésző alapértelmezett lefutásának a megakadályozása.
+    const szerzoHtmlElement = document.getElementById('kolto_nev'); //A HtmlElement elkérése, amelynek a kolto_nev az id-je.
+    const korszakHtmlElement = document.getElementById('korszak'); //A HtmlElement elkérése, amelynek a korszak az id-je.
+    const szerelmek_1HtmlElement = document.getElementById('szerelem1'); //A HtmlElement elkérése, amelynek a szerelem1 az id-je.
+    const szerelmek_2HtmlElement = document.getElementById('szerelem2'); //A HtmlElement elkérése, amelynek a szerelem2 az id-je.
+
+    const szerzoValue = szerzoHtmlElement.value; //Az szerzoHtmlElement értékének belerakása egy változóba.
+    const korszakValue = korszakHtmlElement.value; //Az korszakHtmlElement értékének belerakása egy változóba.
+    const szerelmek_1Value = szerelmek_1HtmlElement.value; //Az szerelmek_1HtmlElement értékének belerakása egy változóba.
+    const szerelmek_2Value = szerelmek_2HtmlElement.value === "" ? undefined : szerelmek_2HtmlElement.value; //Az szerelmek_2HtmlElement értékének belerakása egy változóba. Amennyiben az szerelmek_2HtmlElement-nek nincs értéke, akkor undefined lesz.
+
+    const newElement = { //A newElement létrehozása.
+        szerzo: szerzoValue, //A szerzo értéke a szerzoValue lesz.
+        korszak: korszakValue, //A korszak értéke a korszakValue lesz.
+        szerelmek_1: szerelmek_1Value, //A szerelmek_1 értéke a szerelmek_1Value lesz.
+        szerelmek_2: szerelmek_2Value, //A szerelmek_2 értéke a szerelmek_2Value lesz.
+    }
+    array.push(newElement); //A newElement hozzáadása az arrayhez.
+    tbody.innerHTML = ''; //A táblázat tartalmának kitörlése.
+    render(); //A render függvény újra renderelése.
+})

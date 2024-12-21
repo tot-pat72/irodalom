@@ -70,29 +70,32 @@ th_3.colSpan = 2; //A fejléc 3.cellának megadjuk, hogy 2 oszlopot csatoljon ö
 const tbody = document.createElement('tbody'); //Törzs létrehozása.
 table.appendChild(tbody); //Törzs hozzáadása a táblázathoz.
 
-for(const currentElement of array) { //Végighaladás az arrayen, a currentElement az aktuális elem.
-    const tr = document.createElement('tr'); //Egy új sor létrehozása a táblázatba.
-    tbody.appendChild(tr); //A létrehozott cellát hozzáadom a már korábban létrehozott sorhoz.
+function render(){ //A render függvény meghatározása.
+    for(const currentElement of array) { //Végighaladás az arrayen, a currentElement az aktuális elem.
+        const tr = document.createElement('tr'); //Egy új sor létrehozása a táblázatba.
+        tbody.appendChild(tr); //A létrehozott cellát hozzáadom a már korábban létrehozott sorhoz.
 
-    const szerzo = document.createElement('td'); //Új cella létrehozása az adott sorban.
-    szerzo.innerHTML = currentElement.szerzo; //A cella tartalmának megadása az aktuális elem szerzőjének az értékével.
-    tr.appendChild(szerzo); //A létrehozott cellát hozzáadom a már korábban létrehozott sorhoz.
+        const szerzo = document.createElement('td'); //Új cella létrehozása az adott sorban.
+        szerzo.innerHTML = currentElement.szerzo; //A cella tartalmának megadása az aktuális elem szerzőjének az értékével.
+        tr.appendChild(szerzo); //A létrehozott cellát hozzáadom a már korábban létrehozott sorhoz.
 
-    const korszak = document.createElement('td'); //Új cella létrehozása az adott sorban.
-    korszak.innerHTML = currentElement.korszak; //A cella tartalmának megadása az aktuális elem korszakának az értékével.
-    tr.appendChild(korszak); //A létrehozott cellát hozzáadom a már korábban létrehozott sorhoz.
+        const korszak = document.createElement('td'); //Új cella létrehozása az adott sorban.
+        korszak.innerHTML = currentElement.korszak; //A cella tartalmának megadása az aktuális elem korszakának az értékével.
+        tr.appendChild(korszak); //A létrehozott cellát hozzáadom a már korábban létrehozott sorhoz.
 
-    const szerelmek_1 = document.createElement('td'); //Új cella létrehozása az adott sorban.
-    szerelmek_1.innerHTML = currentElement.szerelmek_1; //A cella tartalmának megadása az aktuális elem szerelmek_1-nek az értékével.
-    tr.appendChild(szerelmek_1); //A létrehozott cellát hozzáadom a már korábban létrehozott sorhoz.
-    if(currentElement.szerelmek_2 === undefined){ //Ha a currentElement.szerelmek_2 egyenlő undefineddal, akkor végig megy az elágazáson.
-        szerelmek_1.colSpan = 2; //Ha idáig lefut, akkor összevonjuk az szerelmek 2 oszlopát.
+        const szerelmek_1 = document.createElement('td'); //Új cella létrehozása az adott sorban.
+        szerelmek_1.innerHTML = currentElement.szerelmek_1; //A cella tartalmának megadása az aktuális elem szerelmek_1-nek az értékével.
+        tr.appendChild(szerelmek_1); //A létrehozott cellát hozzáadom a már korábban létrehozott sorhoz.
+        if(currentElement.szerelmek_2 === undefined){ //Ha a currentElement.szerelmek_2 egyenlő undefineddal, akkor végig megy az elágazáson.
+            szerelmek_1.colSpan = 2; //Ha idáig lefut, akkor összevonjuk az szerelmek 2 oszlopát.
+        }
+
+        if(currentElement.szerelmek_2 !== undefined){ //Ha a currentElement.szerelmek_2 nem egyenlő undefineddal, akkor végig megy az elágazáson.
+            const szerelmek_2 = document.createElement('td'); //Új cella létrehozása az adott sorban.
+            szerelmek_2.innerHTML = currentElement.szerelmek_2; //A cella tartalmának megadása az aktuális elem szerelmek_2-nek az értékével.
+            szerelmek_2.className = "columns"; //className megadása a szerelmek_2 cellának.
+            tr.appendChild(szerelmek_2); //A létrehozott cellát hozzáadom a már korábban létrehozott sorhoz.
+        }  
     }
-
-    if(currentElement.szerelmek_2 !== undefined){ //Ha a currentElement.szerelmek_2 nem egyenlő undefineddal, akkor végig megy az elágazáson.
-        const szerelmek_2 = document.createElement('td'); //Új cella létrehozása az adott sorban.
-        szerelmek_2.innerHTML = currentElement.szerelmek_2; //A cella tartalmának megadása az aktuális elem szerelmek_2-nek az értékével.
-        szerelmek_2.className = "columns"; //className megadása a szerelmek_2 cellának.
-        tr.appendChild(szerelmek_2); //A létrehozott cellát hozzáadom a már korábban létrehozott sorhoz.
-    }  
 }
+render(); //A render függvényt meghívása.

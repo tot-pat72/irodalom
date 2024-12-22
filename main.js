@@ -107,12 +107,19 @@ form.addEventListener('submit', function(e) { //A függvény meghívódik, a sub
     const korszakHtmlElement = document.getElementById('korszak'); //A HtmlElement elkérése, amelynek a korszak az id-je.
     const szerelmek_1HtmlElement = document.getElementById('szerelem1'); //A HtmlElement elkérése, amelynek a szerelem1 az id-je.
     const szerelmek_2HtmlElement = document.getElementById('szerelem2'); //A HtmlElement elkérése, amelynek a szerelem2 az id-je.
+    const checkbox = document.getElementById('masodik'); //A checkbox elkérése, amelynek a masodik az id-je.
 
-    const szerzoValue = szerzoHtmlElement.value; //Az szerzoHtmlElement értékének belerakása egy változóba.
-    const korszakValue = korszakHtmlElement.value; //Az korszakHtmlElement értékének belerakása egy változóba.
-    const szerelmek_1Value = szerelmek_1HtmlElement.value; //Az szerelmek_1HtmlElement értékének belerakása egy változóba.
-    const szerelmek_2Value = szerelmek_2HtmlElement.value === "" ? undefined : szerelmek_2HtmlElement.value; //Az szerelmek_2HtmlElement értékének belerakása egy változóba. Amennyiben az szerelmek_2HtmlElement-nek nincs értéke, akkor undefined lesz.
-
+    const szerzoValue = szerzoHtmlElement.value; //A szerzoHtmlElement értékének belerakása egy változóba.
+    const korszakValue = korszakHtmlElement.value; //A korszakHtmlElement értékének belerakása egy változóba.
+    const szerelmek_1Value = szerelmek_1HtmlElement.value; //A szerelmek_1HtmlElement értékének belerakása egy változóba.
+    let szerelmek_2Value; //A szerelmek_2Value változó létrehozása.
+    if(checkbox.checked === false){ //Ha a checkbox.checked hamis lesz(nincs bepipálva).
+        szerelmek_2Value = undefined; //Akkor a szerelmek_2Value undefined lesz.
+    }
+    else{
+        szerelmek_2Value = szerelmek_2HtmlElement.value === "" ? undefined : szerelmek_2HtmlElement.value; //Akkor a szerelmek_2Value egyenlő lesz a szerelmek_2HtmlElement értékével. Amennyiben az szerelmek_2HtmlElement-nek nincs értéke, akkor undefined lesz.
+    }
+    
     const newElement = { //A newElement létrehozása.
         szerzo: szerzoValue, //A szerzo értéke a szerzoValue lesz.
         korszak: korszakValue, //A korszak értéke a korszakValue lesz.

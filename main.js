@@ -128,6 +128,26 @@ form.addEventListener('submit', function(e) { //A függvény meghívódik, a sub
         valid = false; //A valid változó értéke false lesz.
     }
 
+
+    if(szerelmek_1HtmlElement.value === '' && szerelmek_2HtmlElement.value !== ''){ //Ha a szerelmek_1 beviteli mezője üres, viszont a szerelmek_2 meg nem.
+        const parentElement = szerelmek_1HtmlElement.parentElement; //A szerelmek_1 beviteli mező parentElement property-jének az eltárolása egy változóban.
+        const errorplace = parentElement.querySelector('.error'); //A szerelmek_1 beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
+        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
+            errorplace.innerHTML = "Mindkét szerelmének megadása kötelező"; //Akkor a mindkét szerelmének megadása kötelező hibaüzenetet dobja ki.
+        }
+        valid = false; //A valid változó értéke false lesz.
+    };
+    if(szerelmek_2HtmlElement.value === '' && szerelmek_1HtmlElement.value !== ''){ //Ha a szerelmek_2 beviteli mezője üres, viszont a szerelmek_1 meg nem.
+        const parentElement = szerelmek_2HtmlElement.parentElement; //A szerelmek_2 beviteli mező parentElement property-jének az eltárolása egy változóban.
+        const errorplace = parentElement.querySelector('.error'); //A szerelmek_2 beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
+        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
+            errorplace.innerHTML = "Mindkét szerelmének megadása kötelező"; //Akkor a mindkét szerelmének megadása kötelező hibaüzenetet dobja ki.
+        }
+        valid = false; //A valid változó értéke false lesz.
+    };
+
+
+
     if(valid){ //Ha a valid változó értéke igaz(nem volt kihagyott mező).
         const szerzoValue = szerzoHtmlElement.value; //A szerzoHtmlElement értékének belerakása egy változóba.
         const korszakValue = korszakHtmlElement.value; //A korszakHtmlElement értékének belerakása egy változóba.

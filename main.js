@@ -128,25 +128,9 @@ form.addEventListener('submit', function(e) { //A függvény meghívódik, a sub
         valid = false; //A valid változó értéke false lesz.
     }
 
-
-    if(szerelmek_1HtmlElement.value === '' && szerelmek_2HtmlElement.value !== ''){ //Ha a szerelmek_1 beviteli mezője üres, viszont a szerelmek_2 meg nem.
-        const parentElement = szerelmek_1HtmlElement.parentElement; //A szerelmek_1 beviteli mező parentElement property-jének az eltárolása egy változóban.
-        const errorplace = parentElement.querySelector('.error'); //A szerelmek_1 beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
-        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
-            errorplace.innerHTML = "Mindkét szerelmének megadása kötelező"; //Akkor a mindkét szerelmének megadása kötelező hibaüzenetet dobja ki.
-        }
+    if(!getNonEmptyFormHTMLField(szerelmek_1HtmlElement, szerelmek_2HtmlElement, 'Mindkét szerelmének megadása kötelező')){ //Ha getNonEmptyFormHTMLField függvény hamissal tér vissza, mind a bemeneti szerelmek_1HtmlElement és a szerelmek_2HtmlElement esetén is.
         valid = false; //A valid változó értéke false lesz.
-    };
-    if(szerelmek_2HtmlElement.value === '' && szerelmek_1HtmlElement.value !== ''){ //Ha a szerelmek_2 beviteli mezője üres, viszont a szerelmek_1 meg nem.
-        const parentElement = szerelmek_2HtmlElement.parentElement; //A szerelmek_2 beviteli mező parentElement property-jének az eltárolása egy változóban.
-        const errorplace = parentElement.querySelector('.error'); //A szerelmek_2 beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
-        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
-            errorplace.innerHTML = "Mindkét szerelmének megadása kötelező"; //Akkor a mindkét szerelmének megadása kötelező hibaüzenetet dobja ki.
-        }
-        valid = false; //A valid változó értéke false lesz.
-    };
-
-
+    }
 
     if(valid){ //Ha a valid változó értéke igaz(nem volt kihagyott mező).
         const szerzoValue = szerzoHtmlElement.value; //A szerzoHtmlElement értékének belerakása egy változóba.
@@ -172,15 +156,36 @@ form.addEventListener('submit', function(e) { //A függvény meghívódik, a sub
     }
 })
 
-function validateFormHTMLField(inputHTMLElement, errormassage){ //A validateFormHTMLField függvény meghatározása.
+function validateFormHTMLField(inputHTMLElement, errormessage){ //A validateFormHTMLField függvény meghatározása.
     let valid = true; //A valid változó létrehozása, ami a true értéket kapja.
     if(inputHTMLElement.value === ''){ //Ha az inputHTMLElement.value beviteli mezője üres.
         const parentElement = inputHTMLElement.parentElement; //Az inputHTMLElement beviteli mező parentElement property-jének az eltárolása egy változóban.
         const errorplace = parentElement.querySelector('.error'); //Az inputHTMLElement beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
         if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
-            errorplace.innerHTML = errormassage; //Akkor a hibaüzenet megadása kell.
+            errorplace.innerHTML = errormessage; //Akkor a hibaüzenet megadása kell.
         }
         valid = false; //A valid változó értéke false lesz.
     }
+    return valid; //Visszatérés a valid változóval. Amely hamis, hogyha nem ment át a validáción. Ha meg ki van töltve, akkor igazzal tér vissza.
+}
+
+function getNonEmptyFormHTMLField(szerelmek_1, szerelmek_2, errormessage){ //A getNonEmptyFormHTMLField függvény meghatározása.
+    let valid = true; //A valid változó létrehozása, ami a true értéket kapja.
+    if(szerelmek_1.value === '' && szerelmek_2.value !== ''){ //Ha a szerelmek_1 beviteli mezője üres, viszont a szerelmek_2 meg nem.
+        const parentElement = szerelmek_1.parentElement; //A szerelmek_1 beviteli mező parentElement property-jének az eltárolása egy változóban.
+        const errorplace = parentElement.querySelector('.error'); //A szerelmek_1 beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
+        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
+            errorplace.innerHTML = errormessage; //Akkor a mindkét szerelmének megadása kötelező hibaüzenetet dobja ki.
+        }
+        valid = false; //A valid változó értéke false lesz.
+    };
+    if(szerelmek_2.value === '' && szerelmek_1.value !== ''){ //Ha a szerelmek_2 beviteli mezője üres, viszont a szerelmek_1 meg nem.
+        const parentElement = szerelmek_2.parentElement; //A szerelmek_2 beviteli mező parentElement property-jének az eltárolása egy változóban.
+        const errorplace = parentElement.querySelector('.error'); //A szerelmek_2 beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
+        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
+            errorplace.innerHTML = errormessage; //Akkor a mindkét szerelmének megadása kötelező hibaüzenetet dobja ki.
+        }
+        valid = false; //A valid változó értéke false lesz.
+    };
     return valid; //Visszatérés a valid változóval. Amely hamis, hogyha nem ment át a validáción. Ha meg ki van töltve, akkor igazzal tér vissza.
 }

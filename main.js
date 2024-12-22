@@ -109,6 +109,13 @@ form.addEventListener('submit', function(e) { //A függvény meghívódik, a sub
     const szerelmek_2HtmlElement = document.getElementById('szerelem2'); //A HtmlElement elkérése, amelynek a szerelem2 az id-je.
     const checkbox = document.getElementById('masodik'); //A checkbox elkérése, amelynek a masodik az id-je.
 
+    const thisForm = e.currentTarget; //Az e.currentTarget tulajdonsága, amely a formot tartalmazza, ennek eltárolása egy változóba.
+    const errorHtmlElements = thisForm.querySelectorAll('.error'); //A formon belüli összes error classal ellátott html element elkérése.
+    for(const errorElement of errorHtmlElements){ //Végighaladás a visszakapott errorHtmlElementen.
+        errorElement.innerHTML = ''; //Az aktuális elem tartalmának kitörlése.
+    }
+    let valid = true; //A valid valtozó kezdő értéke igaz.
+
     const szerzoValue = szerzoHtmlElement.value; //A szerzoHtmlElement értékének belerakása egy változóba.
     const korszakValue = korszakHtmlElement.value; //A korszakHtmlElement értékének belerakása egy változóba.
     const szerelmek_1Value = szerelmek_1HtmlElement.value; //A szerelmek_1HtmlElement értékének belerakása egy változóba.
@@ -119,14 +126,41 @@ form.addEventListener('submit', function(e) { //A függvény meghívódik, a sub
     else{
         szerelmek_2Value = szerelmek_2HtmlElement.value === "" ? undefined : szerelmek_2HtmlElement.value; //Akkor a szerelmek_2Value egyenlő lesz a szerelmek_2HtmlElement értékével. Amennyiben az szerelmek_2HtmlElement-nek nincs értéke, akkor undefined lesz.
     }
-    
-    const newElement = { //A newElement létrehozása.
-        szerzo: szerzoValue, //A szerzo értéke a szerzoValue lesz.
-        korszak: korszakValue, //A korszak értéke a korszakValue lesz.
-        szerelmek_1: szerelmek_1Value, //A szerelmek_1 értéke a szerelmek_1Value lesz.
-        szerelmek_2: szerelmek_2Value, //A szerelmek_2 értéke a szerelmek_2Value lesz.
+
+    if(szerzoValue === ''){ //Ha a szerző beviteli mezője üres.
+        const parentElement = szerzoHtmlElement.parentElement; //A szerző beviteli mező parentElement property-jének az eltárolása egy változóban.
+        const errorplace = parentElement.querySelector('.error'); //A szerző beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
+        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
+            errorplace.innerHTML = 'A szerző megadása kötelező'; //Akkor a szerző megadása kötelező hibaüzenetet dobja ki.
+        }
+        valid = false; //A valid változó értéke hamis lesz.
     }
-    array.push(newElement); //A newElement hozzáadása az arrayhez.
-    tbody.innerHTML = ''; //A táblázat tartalmának kitörlése.
-    render(); //A render függvény újra renderelése.
+    if(korszakValue === ''){ //Ha a korszak beviteli mezője üres.
+        const parentElement = korszakHtmlElement.parentElement; //A korszak beviteli mező parentElement property-jének az eltárolása egy változóban.
+        const errorplace = parentElement.querySelector('.error'); //A korszak beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
+        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
+            errorplace.innerHTML = 'A korszak megadása kötelező'; //Akkor a korszak megadása kötelező hibaüzenetet dobja ki.
+        }
+        valid = false; //A valid változó értéke hamis lesz.
+    }
+    if(szerelmek_1Value === ''){ //Ha a szerelmek beviteli mezője üres.
+        const parentElement = szerelmek_1HtmlElement.parentElement; //A szerelmek beviteli mező parentElement property-jének az eltárolása egy változóban.
+        const errorplace = parentElement.querySelector('.error'); //A szerelmek beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
+        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
+            errorplace.innerHTML = 'A szerelme megadása kötelező'; //Akkor a szerelme megadása kötelező hibaüzenetet dobja ki.
+        }
+        valid = false; //A valid változó értéke hamis lesz.
+    }
+    if(valid){ //Ha a valid változó értéke igaz(nem volt kihagyott mező).
+        const newElement = { //A newElement létrehozása.
+            szerzo: szerzoValue, //A szerzo értéke a szerzoValue lesz.
+            korszak: korszakValue, //A korszak értéke a korszakValue lesz.
+            szerelmek_1: szerelmek_1Value, //A szerelmek_1 értéke a szerelmek_1Value lesz.
+            szerelmek_2: szerelmek_2Value, //A szerelmek_2 értéke a szerelmek_2Value lesz.
+        }
+        array.push(newElement); //A newElement hozzáadása az arrayhez.
+        tbody.innerHTML = ''; //A táblázat tartalmának kitörlése.
+        render(); //A render függvény újra renderelése.
+        thisForm.reset(); //A form visszaállítása alaphelyzetbe.
+    }
 })

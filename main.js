@@ -116,42 +116,29 @@ form.addEventListener('submit', function(e) { //A függvény meghívódik, a sub
     }
     let valid = true; //A valid valtozó kezdő értéke igaz.
 
-    const szerzoValue = szerzoHtmlElement.value; //A szerzoHtmlElement értékének belerakása egy változóba.
-    const korszakValue = korszakHtmlElement.value; //A korszakHtmlElement értékének belerakása egy változóba.
-    const szerelmek_1Value = szerelmek_1HtmlElement.value; //A szerelmek_1HtmlElement értékének belerakása egy változóba.
-    let szerelmek_2Value; //A szerelmek_2Value változó létrehozása.
-    if(checkbox.checked === false){ //Ha a checkbox.checked hamis lesz(nincs bepipálva).
-        szerelmek_2Value = undefined; //Akkor a szerelmek_2Value undefined lesz.
-    }
-    else{
-        szerelmek_2Value = szerelmek_2HtmlElement.value === "" ? undefined : szerelmek_2HtmlElement.value; //Akkor a szerelmek_2Value egyenlő lesz a szerelmek_2HtmlElement értékével. Amennyiben az szerelmek_2HtmlElement-nek nincs értéke, akkor undefined lesz.
+    if(!validateFormHTMLField(szerzoHtmlElement, 'A szerző megadása kötelező')){ //Ha validateFormHTMLField függvény hamissal tér vissza, a bemeneti szerzoHtmlElement esetén.
+        valid = false; //A valid változó értéke false lesz.
     }
 
-    if(szerzoValue === ''){ //Ha a szerző beviteli mezője üres.
-        const parentElement = szerzoHtmlElement.parentElement; //A szerző beviteli mező parentElement property-jének az eltárolása egy változóban.
-        const errorplace = parentElement.querySelector('.error'); //A szerző beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
-        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
-            errorplace.innerHTML = 'A szerző megadása kötelező'; //Akkor a szerző megadása kötelező hibaüzenetet dobja ki.
-        }
-        valid = false; //A valid változó értéke hamis lesz.
+    if(!validateFormHTMLField(korszakHtmlElement, 'A korszak megadása kötelező')){ //Ha validateFormHTMLField függvény hamissal tér vissza, a bemeneti korszakHtmlElement esetén.
+        valid = false; //A valid változó értéke false lesz.
     }
-    if(korszakValue === ''){ //Ha a korszak beviteli mezője üres.
-        const parentElement = korszakHtmlElement.parentElement; //A korszak beviteli mező parentElement property-jének az eltárolása egy változóban.
-        const errorplace = parentElement.querySelector('.error'); //A korszak beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
-        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
-            errorplace.innerHTML = 'A korszak megadása kötelező'; //Akkor a korszak megadása kötelező hibaüzenetet dobja ki.
-        }
-        valid = false; //A valid változó értéke hamis lesz.
+
+    if(!validateFormHTMLField(szerelmek_1HtmlElement, 'A szerelme megadása kötelező')){ //Ha validateFormHTMLField függvény hamissal tér vissza, a bemeneti szerelmek_1HtmlElement esetén.
+        valid = false; //A valid változó értéke false lesz.
     }
-    if(szerelmek_1Value === ''){ //Ha a szerelmek beviteli mezője üres.
-        const parentElement = szerelmek_1HtmlElement.parentElement; //A szerelmek beviteli mező parentElement property-jének az eltárolása egy változóban.
-        const errorplace = parentElement.querySelector('.error'); //A szerelmek beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
-        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
-            errorplace.innerHTML = 'A szerelme megadása kötelező'; //Akkor a szerelme megadása kötelező hibaüzenetet dobja ki.
-        }
-        valid = false; //A valid változó értéke hamis lesz.
-    }
+
     if(valid){ //Ha a valid változó értéke igaz(nem volt kihagyott mező).
+        const szerzoValue = szerzoHtmlElement.value; //A szerzoHtmlElement értékének belerakása egy változóba.
+        const korszakValue = korszakHtmlElement.value; //A korszakHtmlElement értékének belerakása egy változóba.
+        const szerelmek_1Value = szerelmek_1HtmlElement.value; //A szerelmek_1HtmlElement értékének belerakása egy változóba.
+        let szerelmek_2Value; //A szerelmek_2Value változó létrehozása.
+        if(checkbox.checked === false){ //Ha a checkbox.checked hamis lesz(nincs bepipálva).
+            szerelmek_2Value = undefined; //Akkor a szerelmek_2Value undefined lesz.
+        }
+        else{
+            szerelmek_2Value = szerelmek_2HtmlElement.value === "" ? undefined : szerelmek_2HtmlElement.value; //Akkor a szerelmek_2Value egyenlő lesz a szerelmek_2HtmlElement értékével. Amennyiben az szerelmek_2HtmlElement-nek nincs értéke, akkor undefined lesz.
+        }
         const newElement = { //A newElement létrehozása.
             szerzo: szerzoValue, //A szerzo értéke a szerzoValue lesz.
             korszak: korszakValue, //A korszak értéke a korszakValue lesz.
@@ -164,3 +151,16 @@ form.addEventListener('submit', function(e) { //A függvény meghívódik, a sub
         thisForm.reset(); //A form visszaállítása alaphelyzetbe.
     }
 })
+
+function validateFormHTMLField(inputHTMLElement, errormassage){ //A validateFormHTMLField függvény meghatározása.
+    let valid = true; //A valid változó létrehozása, ami a true értéket kapja.
+    if(inputHTMLElement.value === ''){ //Ha az inputHTMLElement.value beviteli mezője üres.
+        const parentElement = inputHTMLElement.parentElement; //Az inputHTMLElement beviteli mező parentElement property-jének az eltárolása egy változóban.
+        const errorplace = parentElement.querySelector('.error'); //Az inputHTMLElement beviteli mező parentElement div-jében az error classal ellátott elem megkeresése és annak eltárolása egy változóban.
+        if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
+            errorplace.innerHTML = errormassage; //Akkor a hibaüzenet megadása kell.
+        }
+        valid = false; //A valid változó értéke false lesz.
+    }
+    return valid; //Visszatérés a valid változóval. Amely hamis, hogyha nem ment át a validáción. Ha meg ki van töltve, akkor igazzal tér vissza.
+}

@@ -71,7 +71,7 @@ generateHeader(); //A generateHeader függvény meghívása.
 const tbody = document.createElement('tbody'); //Törzs létrehozása.
 table.appendChild(tbody); //Törzs hozzáadása a táblázathoz.
 
-function render(){ //A render függvény meghatározása.
+function render(array){ //A render függvény meghatározása, amelynek a bemeneti paramétere az array lesz.
     for(const currentElement of array) { //Végighaladás az arrayen, a currentElement az aktuális elem.
         const tr = document.createElement('tr'); //Egy új sor létrehozása a táblázatba.
         tbody.appendChild(tr); //A létrehozott cellát hozzáadom a már korábban létrehozott sorhoz.
@@ -99,7 +99,7 @@ function render(){ //A render függvény meghatározása.
         }  
     }
 }
-render(); //A render függvényt meghívása.
+render(array); //A render függvényt meghívása.
 
 const form = document.getElementById('form'); //Az űrlapban lévő formnak az id-jének az elkérése.
 form.addEventListener('submit', function(e) { //A függvény meghívódik, a submit használatakor.
@@ -152,7 +152,7 @@ form.addEventListener('submit', function(e) { //A függvény meghívódik, a sub
         }
         array.push(newElement); //A newElement hozzáadása az arrayhez.
         tbody.innerHTML = ''; //A táblázat tartalmának kitörlése.
-        render(); //A render függvény újra renderelése.
+        render(array); //A render függvény újra renderelése.
         thisForm.reset(); //A form visszaállítása alaphelyzetbe.
     }
 })

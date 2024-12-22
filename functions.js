@@ -201,7 +201,8 @@ function validateFormHTMLField(inputHTMLElement, errormessage){ //A validateForm
  * @param {string} errormessage Hibaüzenet kiírása, hogyha üres a mező.
  * @returns Visszatér, vagy hamissal hogyha csak az egyik volt kitöltve, igennel meg ha ki volt töltve mindkettő mező.
  */
-function getNonEmptyFormHTMLField(szerelmek_1, szerelmek_2, errormessage){ //A getNonEmptyFormHTMLField függvény meghatározása.
+/**
+ * function getNonEmptyFormHTMLField(szerelmek_1, szerelmek_2, errormessage){ //A getNonEmptyFormHTMLField függvény meghatározása.
     let valid = true; //A valid változó létrehozása, ami a true értéket kapja.
     if(szerelmek_1.value === '' && szerelmek_2.value !== ''){ //Ha a szerelmek_1 beviteli mezője üres, viszont a szerelmek_2 meg nem.
         const parentElement = szerelmek_1.parentElement; //A szerelmek_1 beviteli mező parentElement property-jének az eltárolása egy változóban.
@@ -217,6 +218,17 @@ function getNonEmptyFormHTMLField(szerelmek_1, szerelmek_2, errormessage){ //A g
         if (errorplace != undefined){ //Ha talál ilyen mezőt(nem undefined).
             errorplace.innerHTML = errormessage; //Akkor a mindkét szerelmének megadása kötelező hibaüzenetet dobja ki.
         }
+        valid = false; //A valid változó értéke false lesz.
+    };
+    return valid; //Visszatérés a valid változóval. Amely hamis, hogyha nem ment át a validáción. Ha meg ki van töltve, akkor igazzal tér vissza.
+}
+ */
+function getNonEmptyFormHTMLField(szerelmek_1, szerelmek_2, errormessage){ //A getNonEmptyFormHTMLField függvény meghatározása.
+    let valid = true; //A valid változó létrehozása, ami a true értéket kapja.
+    if (!validateFormHTMLField(szerelmek_1, errormessage) && szerelmek_2.value !== ''){ //Ha validateFormHTMLField függvény hamissal tér vissza, a bemeneti szerelmek_1 esetén és a szerelmek_2.value nem egyenlő egy üres stringgel.
+        valid = false; //A valid változó értéke false lesz.
+    };
+    if (!validateFormHTMLField(szerelmek_2, errormessage) && szerelmek_1.value !== ''){ //Ha validateFormHTMLField függvény hamissal tér vissza, a bemeneti szerelmek_2 esetén és a szerelmek_1.value nem egyenlő egy üres stringgel.
         valid = false; //A valid változó értéke false lesz.
     };
     return valid; //Visszatérés a valid változóval. Amely hamis, hogyha nem ment át a validáción. Ha meg ki van töltve, akkor igazzal tér vissza.
